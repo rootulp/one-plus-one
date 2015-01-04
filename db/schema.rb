@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150104212356) do
+ActiveRecord::Schema.define(version: 20150104212949) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,5 +31,38 @@ ActiveRecord::Schema.define(version: 20150104212356) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+
+  create_table "memberships", force: true do |t|
+    t.integer  "team_id"
+    t.integer  "person_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "memberships", ["person_id"], name: "index_memberships_on_person_id", using: :btree
+  add_index "memberships", ["team_id"], name: "index_memberships_on_team_id", using: :btree
+
+  create_table "organizations", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "people", force: true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.boolean  "paired",     default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "teams", force: true do |t|
+    t.string   "name"
+    t.integer  "organization_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "teams", ["organization_id"], name: "index_teams_on_organization_id", using: :btree
 
 end
