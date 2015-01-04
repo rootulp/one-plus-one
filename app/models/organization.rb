@@ -4,6 +4,8 @@ class Organization < ActiveRecord::Base
   validates :name, presence: true
 
   def weekly_pairing
+    set_all_unpaired
+    
     results = []
     
     while next_unpaired
@@ -25,6 +27,10 @@ class Organization < ActiveRecord::Base
 
   def next_unpaired
     Person.find_by(paired: false)
+  end
+
+  def set_all_unpaired
+    Person.update_all(paired: false)
   end
 
 end
