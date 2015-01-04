@@ -3,6 +3,7 @@ class CreatePeople < ActiveRecord::Migration
     create_table :people do |t|
       t.string :name
       t.string :email
+      t.boolean :paired, default: false
 
       t.timestamps
     end
