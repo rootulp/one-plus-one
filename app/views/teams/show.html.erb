@@ -1,4 +1,17 @@
 <p id="notice"><%= notice %></p>
 
+<p>
+  <strong>Name:</strong>
+  <%= @team.name %>
+</p>
+
+<p>
+  <strong>Members:</strong>
+  <br>
+  <% @team.people.each do |person| %>
+    <%= person.name %><br>
+  <% end %>
+</p>
+
 <%= link_to 'Edit', edit_team_path(@team) %> |
 <%= link_to 'Back', teams_path %>
