@@ -2,52 +2,16 @@ require 'rails_helper'
 
 RSpec.describe Person, :type => :model do
 
-  describe "#update_solo" do
+  describe "#mark_attempt" do
 
-    it "sets paired to true" do
+    it "sets attempted to true" do
       #Setup
       Organization.create(name: "Workers")
-      bob = Person.create( name: "Bob", email: "Bob@gmail.com", organization_id: 1, paired: false )
-      bob.update_solo
+      bob = Person.create( name: "Bob", email: "Bob@gmail.com", organization_id: 1, attempted: false )
+      bob.mark_attempt
 
       #Expectation
-      expect(bob.paired).to be true
-    end
-
-    it "sets last_pair to false" do
-      #Setup
-      Organization.create(name: "Workers")
-      bob = Person.create( name: "Bob", email: "Bob@gmail.com", organization_id: 1, last_pair_id: 3 )
-      bob.update_solo
-
-      #Expectation
-      expect(bob.last_pair).to be false
-    end
-
-  end
-
-  describe "#update_pair" do
-
-    it "sets paired to true" do
-      #Setup
-      Organization.create(name: "Workers")
-      bob = Person.create( name: "Bob", email: "Bob@gmail.com", organization_id: 1, paired: false )
-      tom = Person.create( name: "Tom", email: "Tom@gmail.com", organization_id: 1, paired: false )
-      bob.update_pair(tom)
-
-      #Expectation
-      expect(bob.paired).to be true
-    end
-
-    it "sets last_pair to partner" do
-      #Setup
-      Organization.create(name: "Workers")
-      bob = Person.create( name: "Bob", email: "Bob@gmail.com", organization_id: 1, last_pair: false )
-      tom = Person.create( name: "Tom", email: "Tom@gmail.com", organization_id: 1 )
-      bob.update_pair(tom)
-
-      #Expectation
-      expect(bob.last_pair).to be tom
+      expect(bob.attempted).to be true
     end
   end
 
@@ -57,17 +21,6 @@ RSpec.describe Person, :type => :model do
       builders = Team.create(name: "Builders")
       bob = Person.create( name: "Bob", email: "Bob@gmail.com", organization_id: 1 )
       Membership.create(team: builders, person: bob)
-      
-      expect(bob.potential_pairs).to be_empty
-    end
-
-    it "doesn't include last pair" do
-      Organization.create(name: "Workers")
-      builders = Team.create(name: "Builders")
-      tom = Person.create( name: "Tom", email: "Tom@gmail.com", organization_id: 1 )
-      bob = Person.create( name: "Bob", email: "Bob@gmail.com", organization_id: 1, last_pair: tom )
-      Membership.create(team: builders, person: bob)
-      Membership.create(team: builders, person: tom)
       
       expect(bob.potential_pairs).to be_empty
     end
