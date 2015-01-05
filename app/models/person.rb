@@ -3,10 +3,10 @@ class Person < ActiveRecord::Base
   belongs_to :organization
   belongs_to :last_pair, class_name: 'Person'
 
-  has_many :memberships
+  has_many :memberships, dependent: :destroy
   has_many :teams, :through => :memberships
 
-  validates :email, uniqueness: { case_sensitive: false }
+  validates :email, presence: true, uniqueness: { case_sensitive: false }
   validates :name, presence: true
 
   # Returns array of potential pairs
