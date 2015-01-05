@@ -1,6 +1,6 @@
-<h4>Pairings:</h4>
+<h4>Pairings for Week: <%= @week %></h4>
 
-<% @organization.pairs.each do |pair| %>
+<% @pairs.each do |pair| %>
   <% unless pair[0] %>
     <span>No Pair</span>
   <% else %>

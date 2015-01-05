@@ -1,4 +1,5 @@
 class Organization < ActiveRecord::Base
+  attr_reader :pairs
 
   has_many :teams
   has_many :people
@@ -6,8 +7,9 @@ class Organization < ActiveRecord::Base
   validates :name, presence: true
 
   # Returns array of pairs for the week
-  def pairs
+  def generate_pairings
     reset_paired
+    week = Relationship.maximum("week").to_i + 1
     
     pairs = []
     while next_unpaired
@@ -15,6 +17,7 @@ class Organization < ActiveRecord::Base
       person2 = person1.find_pair
       
       if person2
+        person1.pair_up(person2, week)
         person1.update_pair(person2)
         person2.update_pair(person1)
       else
@@ -51,6 +54,19 @@ class Organization < ActiveRecord::Base
   # Set paired attribute to false for all ppl in organization
   def reset_paired
     self.people.update_all(paired: false)
+  end
+
+  def current_week
+    Relationship.maximum("week").to_i
+  end
+
+  def pairs_for(week)
+    pairs = []
+    relationships = Relationship.where(week: week)
+    relationships.each do |relationship|
+      pairs << [Person.find_by(id: relationship.partner1_id), Person.find_by(id: relationship.partner2_id)]
+    end
+    pairs
   end
 
 end
