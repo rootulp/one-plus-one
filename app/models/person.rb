@@ -17,6 +17,10 @@ class Person < ActiveRecord::Base
     teammates
   end
 
+  def num_potential_teamates
+    self.unmatched_teammates.size
+  end
+
   def find_pair
     return false if self.unmatched_teammates.empty?
     self.unmatched_teammates.sample

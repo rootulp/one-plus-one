@@ -26,7 +26,20 @@ class Organization < ActiveRecord::Base
   end
 
   def next_unpaired
-    Person.find_by(paired: false)
+    fewest_teammates(unpaired_people)
+  end
+
+  def unpaired_people
+    people_and_num_teammates = {}
+    Person.where(paired: false).each do |person|
+      people_and_num_teammates[person] = person.num_potential_teamates
+    end
+    people_and_num_teammates
+  end
+
+  def fewest_teammates(hash)
+    person, num_teammates = hash.min_by{|k,v| v}
+    person
   end
 
   def set_all_unpaired
