@@ -2,13 +2,25 @@
 
 <table>
   <tbody>
+    <tr>
+      <th>Name</th>
+      <th>Members</th>
+      <th>Actions</th>
+    </tr>
     <% @teams.each do |team| %>
       <tr>
         <td><%= team.name %></td>
-        <td><%= link_to 'Show', team %></td>
-        <td><%= link_to 'Add Member', new_membership_path(team) %><td>
-        <td><%= link_to 'Edit Name', edit_team_path(team) %></td>
-        <td><%= link_to 'Destroy', team, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <% team.members.each do |member| %>
+            <%= member.name %>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to 'Show', team %> | 
+          <%= link_to 'Add Member', new_membership_path(team) %> | 
+          <%= link_to 'Edit Name', edit_team_path(team) %> | 
+          <%= link_to 'Destroy', team, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
       </tr>
     <% end %>
   </tbody>

@@ -2,13 +2,26 @@
 
 <table>
   <tbody>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Teams</th>
+      <th>Actions</th>
+    </tr>
     <% @people.each do |person| %>
       <tr>
         <td><%= person.name %></td>
         <td><%= person.email %></td>
-        <td><%= link_to 'Show', person %></td>
-        <td><%= link_to 'Edit Info', edit_person_path(person) %></td>
-        <td><%= link_to 'Destroy', person, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <% person.teams.each do |team| %>
+            <%= team.name %>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to 'Show', person %> |
+          <%= link_to 'Edit Info', edit_person_path(person) %> |
+          <%= link_to 'Destroy', person, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
       </tr>
     <% end %>
   </tbody>
