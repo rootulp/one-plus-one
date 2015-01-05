@@ -9,25 +9,28 @@ class Person < ActiveRecord::Base
   validates :email, uniqueness: { case_sensitive: false }
   validates :name, presence: true
 
-  def potential_teammates
-    teammates = []
+  # Returns array of potential pairs
+  def potential_pairs
+    potential_pairs = []
     self.teams.each do |team|
       team.members.each do |member|
         if self != member && self.last_pair != member && member.paired == false
-          teammates << member 
+          potential_pairs << member 
         end
       end
     end
-    teammates
+    potential_pairs
   end
 
-  def num_potential_teamates
-    self.potential_teammates.size
+  # Returns num of potential pairs
+  def num_potential_pairs
+    self.potential_pairs.size
   end
 
+  # Randomly selects a pair or returns false if no pairs exist
   def find_pair
-    return false if self.potential_teammates.empty?
-    self.potential_teammates.sample
+    return false if self.potential_pairs.empty?
+    self.potential_pairs.sample
   end
 
 end
