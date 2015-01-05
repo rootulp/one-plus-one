@@ -3,10 +3,14 @@ people = [
   [ "John Lennon", "john@lennon.com" ],
   [ "George Harrison", "george@harrison.org" ],
   [ "Ringo Starr", "ringo@starr.org" ],
-  [ "Stu Sutcliffe", "stu@sutcliffe.org" ]
+  [ "Stu Sutcliffe", "stu@sutcliffe.org" ],
+  [ "Linda McCartney", "linda@mccartney.org"],
+  [ "Yoko Ono", "yoko@ono.org"],
+  [ "Tom Petty", "tom@petty.org"],
+  [ "Roy Orbison", "roy@orbison.org"]
 ]
 
-teams = ["The Beatles", "The Quarrymen"]
+teams = ["The Beatles", "The Quarrymen", "Wings", "Plastic Ono Band", "Traveling Wilburys"]
 
 memberships = [
   [ "The Beatles", "Paul McCartney" ],
@@ -15,7 +19,14 @@ memberships = [
   [ "The Beatles", "Ringo Starr" ],
   [ "The Quarrymen", "Paul McCartney" ],
   [ "The Quarrymen", "John Lennon" ],
-  [ "The Quarrymen", "Stu Sutcliffe" ]
+  [ "The Quarrymen", "Stu Sutcliffe" ], 
+  [ "Wings", "Paul McCartney"],
+  [ "Wings", "Linda McCartney"],
+  [ "Plastic Ono Band", "John Lennon"],
+  [ "Plastic Ono Band", "Yoko Ono"],
+  [ "Traveling Wilburys", "George Harrison"]
+  [ "Traveling Wilburys", "Tom Petty"]
+  [ "Traveling Wilburys", "Roy Orbison"]
 ]
 
 Organization.create( name: "Musicians")
