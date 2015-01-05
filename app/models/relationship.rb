@@ -5,4 +5,14 @@ class Relationship < ActiveRecord::Base
 
   validates :partner1_id, presence: true
   validates :partner2_id, presence: true
+
+  after_create do |relationship|
+    Person.find_by(id: relationship.partner1_id).update(paired: true, attempted: true)
+    Person.find_by(id: relationship.partner2_id).update(paired: true, attempted: true)
+  end
+
+  def self.relationships_for(week)
+    Relationship.where(week: week)
+  end
+
 end
