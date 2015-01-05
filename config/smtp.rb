@@ -3,7 +3,7 @@ SMTP_SETTINGS = {
   authentication: :plain,
   domain: "this-app.com", # example: "this-app.com"
   enable_starttls_auto: true,
-  password: ENV.fetch("SMTP_PASSWORD"),
+  password: "1234",
   port: "587",
-  user_name: ENV.fetch("SMTP_USERNAME")
+  user_name: "hello"
 }
