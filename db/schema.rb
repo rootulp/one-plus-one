@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150104212949) do
+ActiveRecord::Schema.define(version: 20150105090501) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,6 +59,17 @@ ActiveRecord::Schema.define(version: 20150104212949) do
   end
 
   add_index "people", ["organization_id"], name: "index_people_on_organization_id", using: :btree
+
+  create_table "relationships", force: true do |t|
+    t.integer  "partner1_id"
+    t.integer  "partner2_id"
+    t.integer  "week",        default: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "relationships", ["partner1_id", "week"], name: "index_relationships_on_partner1_id_and_week", unique: true, using: :btree
+  add_index "relationships", ["partner2_id", "week"], name: "index_relationships_on_partner2_id_and_week", unique: true, using: :btree
 
   create_table "teams", force: true do |t|
     t.string   "name"
