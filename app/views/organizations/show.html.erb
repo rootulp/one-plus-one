@@ -1,11 +1,4 @@
-<h1><%= @organization.name %></h1>
-
-<%= link_to 'Teams', teams_path %> | 
-<%= link_to 'People', people_path %>
-
-<br>
-<br>
-<h6>Pairings:</h6>
+<h4>Pairings:</h4>
 
 <% @organization.pairs.each do |pair| %>
   <% unless pair[0] %>
