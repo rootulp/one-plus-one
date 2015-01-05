@@ -24,8 +24,8 @@ memberships = [
   [ "Wings", "Linda McCartney"],
   [ "Plastic Ono Band", "John Lennon"],
   [ "Plastic Ono Band", "Yoko Ono"],
-  [ "Traveling Wilburys", "George Harrison"]
-  [ "Traveling Wilburys", "Tom Petty"]
+  [ "Traveling Wilburys", "George Harrison"],
+  [ "Traveling Wilburys", "Tom Petty"],
   [ "Traveling Wilburys", "Roy Orbison"]
 ]
 
