@@ -1,6 +1,11 @@
 <h1><%= @organization.name %></h1>
 
-<p>Pairings:</p>
+<%= link_to 'Teams', teams_path %> | 
+<%= link_to 'People', people_path %>
+
+<br>
+<br>
+<h6>Pairings:</h6>
 
 <% @organization.weekly_pairing.each do |pair| %>
   <%= pair[0] + " | " + pair[1] %> <br> 
