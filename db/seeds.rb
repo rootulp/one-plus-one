@@ -36,7 +36,7 @@ teams.each do |name|
 end
 
 people.each do |name, email|
-  Person.create( name: name, email: email )
+  Person.create( name: name, email: email, organization: Organization.find_by(name: "Musicians") )
 end
 
 memberships.each do |team, name|

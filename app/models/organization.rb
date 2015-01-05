@@ -1,5 +1,7 @@
 class Organization < ActiveRecord::Base
+
   has_many :teams
+  has_many :people
 
   validates :name, presence: true
 
@@ -31,7 +33,7 @@ class Organization < ActiveRecord::Base
 
   def unpaired_people
     people_and_num_teammates = {}
-    Person.where(paired: false).each do |person|
+    Person.where(paired: false, organization: self).each do |person|
       people_and_num_teammates[person] = person.num_potential_teamates
     end
     people_and_num_teammates
@@ -43,7 +45,7 @@ class Organization < ActiveRecord::Base
   end
 
   def set_all_unpaired
-    Person.update_all(paired: false)
+    Person.where(organization: self).update_all(paired: false)
   end
 
 end

@@ -51,10 +51,13 @@ ActiveRecord::Schema.define(version: 20150104212949) do
   create_table "people", force: true do |t|
     t.string   "name"
     t.string   "email"
-    t.boolean  "paired",     default: false
+    t.integer  "organization_id"
+    t.boolean  "paired",          default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "people", ["organization_id"], name: "index_people_on_organization_id", using: :btree
 
   create_table "teams", force: true do |t|
     t.string   "name"
