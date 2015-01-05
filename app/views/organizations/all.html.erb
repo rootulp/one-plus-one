@@ -10,6 +10,7 @@
     <% (1..@week).to_a.each do |week| %>
       <tr>
         <td><%= week %></td>
+        <!-- Don't like all this logic in view -->
         <% @all_relationships.where(week: week).each do |pair| %>
           <td>
             <% person1 = Person.find_by(id: pair.partner1_id) %> 
