@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 20150105090501) do
 
   create_table "organizations", force: true do |t|
     t.string   "name"
+    t.integer  "week",       default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -52,8 +53,8 @@ ActiveRecord::Schema.define(version: 20150105090501) do
     t.string   "name"
     t.string   "email"
     t.integer  "organization_id"
-    t.integer  "last_pair_id",    default: 0
     t.boolean  "paired",          default: false
+    t.boolean  "attempted",       default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

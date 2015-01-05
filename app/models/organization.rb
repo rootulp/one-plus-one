@@ -6,42 +6,29 @@ class Organization < ActiveRecord::Base
 
   validates :name, presence: true
 
-  # Returns array of pairs for the week
   def generate_pairings
-    reset_paired
-    week = Relationship.maximum("week").to_i + 1
+    reset_paired_and_attempted
     
-    pairs = []
-    while next_unpaired
-      person1 = next_unpaired
+    while next_unattempted
+      person1 = next_unattempted
       person2 = person1.find_pair
-      
-      if person2
-        person1.pair_up(person2, week)
-        person1.update_pair(person2)
-        person2.update_pair(person1)
-      else
-        person1.update_solo
-      end
-
-      pairs << [person1, person2]
+      person1.pair_up(person2, current_week) if person2
+      person1.mark_attempt
     end
-    
-    pairs
   end
 
-  # Returns the next unpaired teammate with the fewest potential pairs
-  def next_unpaired
-    fewest_potential_pairs(unpaired_people)
+  # Returns the next unattempted teammate with the fewest potential pairs
+  def next_unattempted
+    fewest_potential_pairs(unattempted_people)
   end
 
-  # Returns hash of unpaired people and the number of potential pairs they have
-  def unpaired_people
-    unpaired = {}
-    people.where(paired: false).each do |person|
-      unpaired[person] = person.num_potential_pairs
+  # Returns hash of unattempted people and the number of potential pairs they have
+  def unattempted_people
+    unattempted = {}
+    people.where(attempted: false).each do |person|
+      unattempted[person] = person.num_potential_pairs
     end
-    unpaired
+    unattempted
   end
 
   # Returns the key for the lowest value in the hash
@@ -52,21 +39,30 @@ class Organization < ActiveRecord::Base
   end
 
   # Set paired attribute to false for all ppl in organization
-  def reset_paired
+  def reset_paired_and_attempted
     self.people.update_all(paired: false)
-  end
-
-  def current_week
-    Relationship.maximum("week").to_i
+    self.people.update_all(attempted: false)
   end
 
   def pairs_for(week)
     pairs = []
-    relationships = Relationship.where(week: week)
+    relationships = Relationship.relationships_for(week)
     relationships.each do |relationship|
       pairs << [Person.find_by(id: relationship.partner1_id), Person.find_by(id: relationship.partner2_id)]
     end
     pairs
+  end
+
+  def unpaired_for(week)
+    self.people - pairs_for(week).flatten
+  end
+
+  def current_week
+    self.week.to_i
+  end
+
+  def last_week
+    self.week.to_i - 1
   end
 
 end
