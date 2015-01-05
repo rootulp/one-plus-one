@@ -1,19 +1,14 @@
 <h4>Pairings for Week: <%= @week %></h4>
 
 <% @pairs.each do |pair| %>
-  <% unless pair[0] %>
-    <span>No Pair</span>
-  <% else %>
-    <%= link_to pair[0].name, person_path(pair[0]) %>
-  <% end %>
-
+  <%= link_to pair[0].name, person_path(pair[0]) %>
   <span> | </span>
-
-  <% unless pair[1] %>
-    <span>No Pair</span>
-  <% else %>
-    <%= link_to pair[1].name, person_path(pair[1]) %>
-  <% end %>
-
+  <%= link_to pair[1].name, person_path(pair[1]) %>
   <br>
+<% end %>
+<br>
+Unpaired:
+<br>
+<% @unpaired.each do |person| %>
+  <%= link_to person.name, person_path(person) %> <br>
 <% end %>
