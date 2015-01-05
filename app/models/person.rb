@@ -1,6 +1,7 @@
 class Person < ActiveRecord::Base
 
   belongs_to :organization
+  belongs_to :last_pair, class_name: 'Person'
 
   has_many :memberships
   has_many :teams, :through => :memberships
@@ -12,7 +13,7 @@ class Person < ActiveRecord::Base
     teammates = []
     self.teams.each do |team|
       team.members.each do |member|
-        if member != self && member.paired == false
+        if self != member && self.last_pair != member && member.paired == false
           teammates << member 
         end
       end

@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 20150104212949) do
     t.string   "name"
     t.string   "email"
     t.integer  "organization_id"
+    t.integer  "last_pair_id"
     t.boolean  "paired",          default: false
     t.datetime "created_at"
     t.datetime "updated_at"

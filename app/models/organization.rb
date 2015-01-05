@@ -15,11 +15,11 @@ class Organization < ActiveRecord::Base
        
       if person1.find_pair
         person2 = person1.find_pair
-        person1.update(paired: true)
-        person2.update(paired: true)
+        person1.update(paired: true, last_pair: person2)
+        person2.update(paired: true, last_pair: person1)
         results << [person1.name, person2.name]
       else
-        person1.update(paired: true)
+        person1.update(paired: true, last_pair: nil)
         results << [person1.name, "NO MATCH"]
       end
     end
