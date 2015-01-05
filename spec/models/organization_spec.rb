@@ -2,15 +2,25 @@ require 'rails_helper'
 
 RSpec.describe Organization, :type => :model do
 
-  describe "#reset_paired" do
+  describe "#reset_flags" do
     it "sets all people's paired attribute to false" do
       #Setup
       Organization.create(name: "Workers")
       Person.create( name: "Bob", email: "Bob@gmail.com", paired: true, organization: Organization.find_by(name: "Workers") )
-      Organization.find_by(name: "Workers").reset_paired
+      Organization.find_by(name: "Workers").reset_flags
 
       #Expectation
       expect(Person.find_by(name: "Bob").paired).to be false
+    end
+
+    it "sets all people's attempted attribute to false" do
+      #Setup
+      Organization.create(name: "Workers")
+      Person.create( name: "Bob", email: "Bob@gmail.com", attempted: true, organization: Organization.find_by(name: "Workers") )
+      Organization.find_by(name: "Workers").reset_flags
+
+      #Expectation
+      expect(Person.find_by(name: "Bob").attempted).to be false
     end
   end
 
@@ -49,33 +59,35 @@ RSpec.describe Organization, :type => :model do
     end
   end
 
-  describe "#unpaired_people" do
-    it "returns a hash of unpaired people and the number of their potential pairs" do
+  describe "#unattempted_people" do
+    it "returns a hash of unattempted people and the number of their potential pairs" do
       org = Organization.create(name: "Workers")
       builders = Team.create(name: "Builders")
-      tom = Person.create( name: "Tom", email: "Tom@gmail.com", organization: org, paired: false )
-      bob = Person.create( name: "Bob", email: "Bob@gmail.com", organization: org, paired: false )
-      ron = Person.create( name: "Ron", email: "Ron@gmail.com", organization: org, paired: false, last_pair: bob )
+      wizards = Team.create(name: "Builders")
+      tom = Person.create( name: "Tom", email: "Tom@gmail.com", organization: org )
+      bob = Person.create( name: "Bob", email: "Bob@gmail.com", organization: org )
+      ron = Person.create( name: "Ron", email: "Ron@gmail.com", organization: org )
       Membership.create(team: builders, person: bob)
       Membership.create(team: builders, person: tom)
-      Membership.create(team: builders, person: ron)
+      Membership.create(team: wizards, person: ron)
 
-      expect(org.unpaired_people).to eq({bob => 2, tom => 2, ron => 1})
+      expect(org.unattempted_people).to eq({bob => 1, tom => 1, ron => 0})
     end
   end
 
-  describe "#next_unpaired" do
+  describe "#next_unattempted" do
     it "returns the person with the fewest_potential_pairs" do
       org = Organization.create(name: "Workers")
       builders = Team.create(name: "Builders")
-      tom = Person.create( name: "Tom", email: "Tom@gmail.com", organization: org, paired: false )
-      bob = Person.create( name: "Bob", email: "Bob@gmail.com", organization: org, paired: false )
-      ron = Person.create( name: "Ron", email: "Ron@gmail.com", organization: org, paired: false, last_pair: bob )
+      wizards = Team.create(name: "Builders")
+      tom = Person.create( name: "Tom", email: "Tom@gmail.com", organization: org )
+      bob = Person.create( name: "Bob", email: "Bob@gmail.com", organization: org )
+      ron = Person.create( name: "Ron", email: "Ron@gmail.com", organization: org )
       Membership.create(team: builders, person: bob)
       Membership.create(team: builders, person: tom)
-      Membership.create(team: builders, person: ron)
+      Membership.create(team: wizards, person: ron)
 
-      expect(org.next_unpaired).to eq(ron)
+      expect(org.next_unattempted).to eq(ron)
     end
   end
 
