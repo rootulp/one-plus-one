@@ -7,6 +7,18 @@
 <br>
 <h6>Pairings:</h6>
 
-<% @organization.weekly_pairing.each do |pair| %>
-  <%= pair[0] + " | " + pair[1] %> <br> 
+<% @organization.pairs.each do |pair| %>
+  <% if pair[0].is_a? String %>
+    <span>No Pair</span>
+  <% else %>
+    <%= link_to pair[0].name, person_path(pair[0]) %>
+  <% end %>
+   | 
+  <% if pair[1].is_a? String %>
+    <span>No Pair</span>
+  <% else %>
+    <%= link_to pair[1].name, person_path(pair[1]) %>
+  <% end %>
+
+  <br>
 <% end %>

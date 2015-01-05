@@ -5,10 +5,10 @@ class Organization < ActiveRecord::Base
 
   validates :name, presence: true
 
-  def weekly_pairing
-    set_all_unpaired
+  def pairs
+    reset_unpaired
     
-    results = []
+    pairs = []
     
     while next_unpaired
       person1 = next_unpaired
@@ -17,14 +17,14 @@ class Organization < ActiveRecord::Base
         person2 = person1.find_pair
         person1.update(paired: true, last_pair: person2)
         person2.update(paired: true, last_pair: person1)
-        results << [person1.name, person2.name]
+        pairs << [person1, person2]
       else
         person1.update(paired: true, last_pair: nil)
-        results << [person1.name, "NO MATCH"]
+        pairs << [person1, "NO MATCH"]
       end
     end
     
-    results
+    pairs
   end
 
   def next_unpaired
@@ -44,7 +44,7 @@ class Organization < ActiveRecord::Base
     person
   end
 
-  def set_all_unpaired
+  def reset_unpaired
     Person.where(organization: self).update_all(paired: false)
   end
 
