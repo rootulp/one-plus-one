@@ -4,8 +4,8 @@ class CreatePeople < ActiveRecord::Migration
       t.string :name
       t.string :email
       t.belongs_to :organization, index: true
-      t.belongs_to :last_pair, class_name: 'Person', default: false
       t.boolean :paired, default: false
+      t.boolean :attempted, default: false
 
       t.timestamps
     end
