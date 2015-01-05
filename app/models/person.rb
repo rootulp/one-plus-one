@@ -33,4 +33,14 @@ class Person < ActiveRecord::Base
     self.potential_pairs.sample
   end
 
+  # Updates paired attribute to true and clears last_pair
+  def update_solo
+    self.update(paired: true, last_pair: false)
+  end
+
+  # Updates paired attribute to true and last_pair to the current pair
+  def update_pair(pair)
+    self.update(paired: true, last_pair: pair)
+  end
+
 end
