@@ -1,5 +1,6 @@
 class MembershipsController < ApplicationController
   before_action :set_membership, only: [:destroy]
+  before_action :set_team, only: [:new]
 
   def new
     @membership = Membership.new
@@ -21,9 +22,13 @@ class MembershipsController < ApplicationController
       @membership = Membership.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def membership_params
-      params.require(:membership).permit(:person_id, :team_id)
+    def set_team
+      @team = Team.find(params[:format])
     end
-    
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    # def membership_params
+    #   params.require(:membership).permit(:person_id, :team_id)
+    # end
+
 end

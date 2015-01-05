@@ -4,4 +4,8 @@ class Team < ActiveRecord::Base
   has_many :people, :through => :memberships
 
   validates :name, presence: true
+
+  def not_members
+    Person.all - self.people
+  end
 end

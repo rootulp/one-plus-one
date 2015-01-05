@@ -1,0 +1,12 @@
+<%= form_for(@membership) do |f| %>
+  
+  Add
+  <%= collection_select(:membership, :person_id, @team.not_members, :id, :name) %>
+  
+  To <%= @team.name %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+
+<% end %>

@@ -13,5 +13,8 @@
   <% end %>
 </p>
 
-<%= link_to 'Edit', edit_team_path(@team) %> |
+<%= link_to 'Add Member', new_membership_path(@team) %> |
+<%= link_to 'Delete Member', new_membership_path %> 
+<br>
+<%= link_to 'Edit Team Name', edit_team_path(@team) %> |
 <%= link_to 'Back', teams_path %>
