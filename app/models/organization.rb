@@ -38,7 +38,7 @@ class Organization < ActiveRecord::Base
   end
 
   def fewest_teammates(hash)
-    person, num_teammates = hash.min_by{|k,v| v}
+    person, num_teammates = hash.min_by{ |key, value| value }
     person
   end
 
