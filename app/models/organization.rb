@@ -16,7 +16,7 @@ class Organization < ActiveRecord::Base
     end
   end
 
-  # Returns the next unattempted person with the fewest potential pairs
+  # Returns the unattempted person with the fewest potential pairs
   def next_unattempted
     fewest_potential_pairs(unattempted_people)
   end
@@ -37,11 +37,13 @@ class Organization < ActiveRecord::Base
     person
   end
 
-  # Set paired attribute to false for all ppl in organization
+  # Set paired and attempted attributes to false for all ppl in organization
   def reset_flags
     self.people.update_all(paired: false, attempted: false)
   end
 
+
+  # Retrieve relationships for a given week, pull out people and toss into array
   def pairs_for(week)
     pairs = []
     relationships = Relationship.relationships_for(week)
@@ -51,10 +53,12 @@ class Organization < ActiveRecord::Base
     pairs
   end
 
+  # Retrieve ppl who weren't paired for a given week
   def unpaired_for(week)
     self.people - pairs_for(week).flatten
   end
 
+  # I don't like having week be a property of organization but wasn't sure where else to put it
   def current_week
     self.week.to_i
   end

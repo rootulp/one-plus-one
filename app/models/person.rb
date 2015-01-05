@@ -13,11 +13,12 @@ class Person < ActiveRecord::Base
   validates :email, presence: true, uniqueness: { case_sensitive: false }
   validates :name, presence: true
 
+  # Returns array of potential pairs
   def potential_pairs
     potentials = []
     teams.each do |team|
       team.members.each do |member|
-        if member != self && member != last_pair && member.paired == false
+        if member != self && member != self.last_pair && member.paired == false
           potentials << member
         end
       end
@@ -36,6 +37,7 @@ class Person < ActiveRecord::Base
     potential_pairs.sample
   end
 
+  # Create relationship between self and pair
   def pair_up(pair, week)
     relationships.create!(partner2_id: pair.id, week: week)
   end
@@ -44,16 +46,19 @@ class Person < ActiveRecord::Base
     self.update(attempted: true)
   end
 
+  # Returns array of all previous pairs
   def all_pairs
     all_pairs = self.pairs + self.reverse_pairs
     all_pairs.uniq!
   end
 
+  # Returns relationship from last week or false if not paired
   def last_relationship
     week = Organization.first.last_week
     relationship = self.relationships.find_by(week: week) || self.reverse_relationships.find_by(week: week)
   end
 
+  # Returns pair from last week or false if not paired
   def last_pair
     week = Organization.first.last_week
     return false unless last_relationship
