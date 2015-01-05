@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   root 'organizations#show'
+  get 'organizations/all' => 'organizations#all'
   get 'organizations/generate_pairings' => 'organizations#generate_pairings'
   
   resources :people
