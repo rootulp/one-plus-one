@@ -1,20 +1,23 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @team.name %>
-</p>
+<strong>Team Name:</strong>
+<%= @team.name %>
 
-<p>
-  <strong>Members:</strong>
-  <br>
-  <% @team.people.each do |person| %>
-    <%= person.name %><br>
-  <% end %>
-</p>
+<br>
+
+<strong>Members:</strong>
+<table>
+  <tbody>
+    <% @team.people.each do |person| %>
+      <tr>
+        <td><%= person.name %></td>
+        <td> <%= link_to 'Delete Member', membership_path(person, @team), method: :delete, 
+                data: { confirm:'Are you sure?' } %> </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
 <%= link_to 'Add Member', new_membership_path(@team) %> |
-<%= link_to 'Delete Member', new_membership_path %> 
-<br>
 <%= link_to 'Edit Team Name', edit_team_path(@team) %> |
 <%= link_to 'Back', teams_path %>
