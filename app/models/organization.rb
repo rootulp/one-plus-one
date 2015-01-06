@@ -14,6 +14,18 @@ class Organization < ActiveRecord::Base
       current.pair_up(current.find_pair, current_week) if current.find_pair
       current.mark_attempt
     end
+
+    pair_leftovers if leftovers?
+  end
+
+  def leftovers?
+    people.where(paired: false).size > 1
+  end
+
+  def pair_leftovers
+    current, pair = people.where(paired: false).take(2)
+    current.pair_up(pair, current_week)
+    pair_leftovers if leftovers?
   end
 
   # Returns the unattempted person with the fewest potential pairs
