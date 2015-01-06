@@ -18,10 +18,12 @@ class Organization < ActiveRecord::Base
     pair_leftovers if leftovers?
   end
 
+  # Are there any unpaired people left?
   def leftovers?
     people.where(paired: false).size > 1
   end
 
+  # Pair up people without pairs (doesn't satisfy same team rule)
   def pair_leftovers
     current, pair = people.where(paired: false).take(2)
     current.pair_up(pair, current_week)
@@ -53,7 +55,6 @@ class Organization < ActiveRecord::Base
   def reset_flags
     self.people.update_all(paired: false, attempted: false)
   end
-
 
   # Retrieve relationships for a given week, pull out people and toss into array
   def pairs_for(week)
