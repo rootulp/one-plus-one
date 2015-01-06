@@ -7,8 +7,8 @@ One plus one is a small rails app used to create weekly pairings between teammat
 The project is hosted on [Heroku](https://one--plus--one.herokuapp.com/)  
 Optional - Run Locally:  
 1. <code>git clone</code> this repo  
-2. run <code> bundle install </code>
-3. run rake db commands
+2. run <code> bundle install </code>  
+3. run rake db commands  
 4. start <code> rails server</code>
 
 ### Strategy for Pairings
