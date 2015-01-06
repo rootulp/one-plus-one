@@ -2,6 +2,7 @@
   <tbody>
     <tr>
       <th>Week Number</th>
+      <!-- Don't like hardcoded 4 weeks -->
       <th>Pair 1</th>
       <th>Pair 2</th>
       <th>Pair 3</th>
@@ -15,7 +16,7 @@
           <td>
             <% person1 = Person.find_by(id: pair.partner1_id) %> 
             <% person2 = Person.find_by(id: pair.partner2_id) %>
-            <%= link_to person1.name, person_path(person1) %> | 
+            <%= link_to person1.name, person_path(person1) %><br>
             <%= link_to person2.name, person_path(person2) %>
           </td>
         <% end %>
