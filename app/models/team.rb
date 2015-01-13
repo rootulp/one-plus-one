@@ -12,6 +12,6 @@ class Team < ActiveRecord::Base
   end
 
   def not_members
-    Person.where(organization: self.organization) - self.people
+    Person.where(organization: self.organization) - self.members
   end
 end

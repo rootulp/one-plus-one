@@ -9,7 +9,8 @@ Optional - Run Locally:
 1. <code>git clone</code> this repo  
 2. run <code> bundle install </code>  
 3. run rake db commands  
-4. start <code> rails server</code>
+4. start <code> rails server</code>  
+5. optional: run tests with <code> bundle exec rspec </code>
 
 ### Strategy for Pairings
 The pairing algorithm I used has undergone several iterations. It started with selecting completely random pairs of people in the organization. Then I implemented teams and selected random pairs of teammates. Once that worked, I realized that the sample data had a few outliers (Yoko Ono, and Linda McCartney) who had just one potential pair each. In the current system, they'd rarely get paired because the people with more teammates were more likely to get paired before them. I choose to account for this by starting to pair people based on how few potential pairs they had left. The efficiency of the algorithm kind-of took a hit here as a hash of people along with their number of potential pairs had to be rebuilt upon every iteration of the pairing algorithm but this resulted in fewer **NO PAIR**'s so I was satisfied. 

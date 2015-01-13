@@ -4,29 +4,24 @@ RSpec.describe Organization, :type => :model do
 
   describe "#reset_flags" do
     it "sets all people's paired attribute to false" do
-      #Setup
       Organization.create(name: "Workers")
       Person.create( name: "Bob", email: "Bob@gmail.com", paired: true, organization: Organization.find_by(name: "Workers") )
       Organization.find_by(name: "Workers").reset_flags
 
-      #Expectation
       expect(Person.find_by(name: "Bob").paired).to be false
     end
 
     it "sets all people's attempted attribute to false" do
-      #Setup
       Organization.create(name: "Workers")
       Person.create( name: "Bob", email: "Bob@gmail.com", attempted: true, organization: Organization.find_by(name: "Workers") )
       Organization.find_by(name: "Workers").reset_flags
 
-      #Expectation
       expect(Person.find_by(name: "Bob").attempted).to be false
     end
   end
 
   describe "#fewest_potential_pairs" do
     it "returns the person with the fewest teammates" do
-      #Setup
       Organization.create(name: "Workers")
       teammates = {
         "Foo" => 3,
@@ -40,21 +35,17 @@ RSpec.describe Organization, :type => :model do
    describe "#new" do
     context 'with invalid parameters' do
       it "doesn't create anything" do
-        #Setup
-        Organization.create()
+          Organization.create()
         
-        #Expectation
-        expect(Organization.all.size).to eq(0)
+          expect(Organization.all.size).to eq(0)
       end
     end
 
     context "with valid parameters" do
       it "creates an organization" do
-        #Setup
-        Organization.create(name: "Workers")
+          Organization.create(name: "Workers")
 
-        #Expectation
-        expect(Organization.find_by(name: "Workers")).to be_truthy
+          expect(Organization.find_by(name: "Workers")).to be_truthy
       end
     end
   end

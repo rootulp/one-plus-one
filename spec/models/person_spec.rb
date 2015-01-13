@@ -5,12 +5,10 @@ RSpec.describe Person, :type => :model do
   describe "#mark_attempt" do
 
     it "sets attempted to true" do
-      #Setup
       Organization.create(name: "Workers")
       bob = Person.create( name: "Bob", email: "Bob@gmail.com", organization_id: 1, attempted: false )
       bob.mark_attempt
 
-      #Expectation
       expect(bob.attempted).to be true
     end
   end
